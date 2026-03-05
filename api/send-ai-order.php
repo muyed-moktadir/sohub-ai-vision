@@ -51,7 +51,7 @@ $smtp_host = $_ENV['SMTP_HOST'] ?? 'smtp.gmail.com';
 $smtp_port = (int)($_ENV['SMTP_PORT'] ?? 587);
 $smtp_user = $_ENV['SMTP_USER'] ?? '';
 $smtp_pass = $_ENV['SMTP_PASS'] ?? '';
-$admin_email = $_ENV['ADMIN_EMAIL'] ?? 'hello@sohub.com.bd';
+$admin_email = $_ENV['ADMIN_EMAIL'] ?? 'muyed@sohub.com.bd';
 
 if (empty($smtp_user) || empty($smtp_pass)) {
     http_response_code(500);
