@@ -37,6 +37,10 @@ function loadEnv($path) {
 require_once __DIR__ . "/ai-pdf-generator.php";
 
 $envPath = __DIR__ . '/.env';
+if (!file_exists($envPath)) {
+    $envPath = dirname(__DIR__) . '/.env';
+}
+
 if (!loadEnv($envPath)) {
     http_response_code(500);
     echo json_encode(['success' => false, 'error' => 'API Configuration not found']);
