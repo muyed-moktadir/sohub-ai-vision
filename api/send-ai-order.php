@@ -172,7 +172,7 @@ function sendEmail($host, $port, $user, $pass, $to, $subject, $body, $pdfContent
     stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
     
     fputs($socket, "EHLO " . ($_SERVER['SERVER_NAME'] ?? 'localhost') . "\r\n");
-    do { $response = fgets($socket, 3, 1) === '-');
+    do { $response = fgets($socket, 515); } while (substr($response, 3, 1) === '-');
     
     fputs($socket, "AUTH LOGIN\r\n");
     fgets($socket, 515);
