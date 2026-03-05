@@ -12,14 +12,14 @@
 ## 🛠️ স্টেপ-বাই-স্টেপ ডেপ্লয়মেন্ট
 
 ### ধাপ ১: গিথাব (GitHub) সেটআপ
-১. [GitHub.com](https://github.com) এ একটি নতুন **Private Repository** খুলুন (নাম দিন: `ai-vision-spark`)।
+১. [GitHub.com](https://github.com) এ আপনি ইতিমধ্যে একটি নতুন **Private Repository** খুলেছেন (নাম: `sohub-ai-vision`)।
 ২. আপনার কম্পিউটারে টার্মিনাল ওপেন করে এই কমান্ডগুলো রান করুন:
    ```bash
    git init
    git add .
-   git commit -m "Initial Deployment Setup"
+   git commit -m "Initialize SOHUB AI Vision project with dedicated API"
    git branch -M main
-   git remote add origin [আপনার গিথাব রিপোজিটরি লিংক]
+   git remote add origin https://github.com/[আপনার-ইউজারনেম]/sohub-ai-vision.git
    git push -u origin main
    ```
 
