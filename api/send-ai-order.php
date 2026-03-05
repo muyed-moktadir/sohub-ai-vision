@@ -142,21 +142,24 @@ if ($productType === 'edge-engine-custom') {
 }
 
 try {
+    // Send to Admin first
     sendEmail($smtp_host, $smtp_port, $smtp_user, $smtp_pass, $admin_email, $subjectTitle, $adminEmailBody, $pdfContent, 'SOHUB Admin');
     
+    // Then send confirmation to Customer
     if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $msg = ($productType === 'edge-engine-custom') ? "Custom Request Received" : "Order Confirmation";
-        sendEmail($smtp_host, $smtp_port, $smtp_user, $smtp_pass, $email, "$msg - SOHUB AI Vision", $customerEmailBody, $pdfContent, $name);
+        // Also CC the admin back on the customer email for tracking
+        sendEmail($smtp_host, $smtp_port, $smtp_user, $smtp_pass, $email, "$msg - SOHUB AI Vision", $customerEmailBody, $pdfContent, $name, $admin_email);
     }
     
     echo json_encode(['success' => true, 'message' => 'Your request has been sent successfully.']);
     
 } catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(['success' => false, 'error' => 'Email failed to send.']);
+    echo json_encode(['success' => false, 'error' => 'Email failed: ' . $e->getMessage()]);
 }
 
-function sendEmail($host, $port, $user, $pass, $to, $subject, $body, $pdfContent, $toName) {
+function sendEmail($host, $port, $user, $pass, $to, $subject, $body, $pdfContent, $toName, $cc = null) {
     $socket = stream_socket_client("tcp://$host:$port", $errno, $errstr, 15);
     if (!$socket) throw new Exception("Connection failed: $errstr");
     
@@ -169,7 +172,7 @@ function sendEmail($host, $port, $user, $pass, $to, $subject, $body, $pdfContent
     stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
     
     fputs($socket, "EHLO " . ($_SERVER['SERVER_NAME'] ?? 'localhost') . "\r\n");
-    do { $response = fgets($socket, 515); } while (substr($response, 3, 1) === '-');
+    do { $response = fgets($socket, 3, 1) === '-');
     
     fputs($socket, "AUTH LOGIN\r\n");
     fgets($socket, 515);
@@ -182,33 +185,38 @@ function sendEmail($host, $port, $user, $pass, $to, $subject, $body, $pdfContent
     fgets($socket, 515);
     fputs($socket, "RCPT TO: <$to>\r\n");
     fgets($socket, 515);
+    if ($cc) {
+        fputs($socket, "RCPT TO: <$cc>\r\n");
+        fgets($socket, 515);
+    }
     fputs($socket, "DATA\r\n");
     fgets($socket, 515);
     
     $boundary = md5(time());
-    $email = "From: SOHUB AI Vision <$user>\r\n";
-    $email .= "To: $toName <$to>\r\n";
-    $email .= "Subject: =?UTF-8?B?" . base64_encode($subject) . "?=\r\n";
-    $email .= "MIME-Version: 1.0\r\n";
-    $email .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n\r\n";
+    $emailContents = "From: SOHUB AI Vision <$user>\r\n";
+    $emailContents .= "To: $toName <$to>\r\n";
+    if ($cc) $emailContents .= "Cc: $cc\r\n";
+    $emailContents .= "Subject: =?UTF-8?B?" . base64_encode($subject) . "?=\r\n";
+    $emailContents .= "MIME-Version: 1.0\r\n";
+    $emailContents .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n\r\n";
     
-    $email .= "--$boundary\r\n";
-    $email .= "Content-Type: text/html; charset=UTF-8\r\n";
-    $email .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
-    $email .= $body . "\r\n\r\n";
+    $emailContents .= "--$boundary\r\n";
+    $emailContents .= "Content-Type: text/html; charset=UTF-8\r\n";
+    $emailContents .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
+    $emailContents .= $body . "\r\n\r\n";
     
     if ($pdfContent !== null) {
-        $email .= "--$boundary\r\n";
-        $email .= "Content-Type: application/pdf; name=\"Quotation.pdf\"\r\n";
-        $email .= "Content-Transfer-Encoding: base64\r\n";
-        $email .= "Content-Disposition: attachment; filename=\"Quotation.pdf\"\r\n\r\n";
-        $email .= chunk_split(base64_encode($pdfContent)) . "\r\n";
+        $emailContents .= "--$boundary\r\n";
+        $emailContents .= "Content-Type: application/pdf; name=\"Quotation.pdf\"\r\n";
+        $emailContents .= "Content-Transfer-Encoding: base64\r\n";
+        $emailContents .= "Content-Disposition: attachment; filename=\"Quotation.pdf\"\r\n\r\n";
+        $emailContents .= chunk_split(base64_encode($pdfContent)) . "\r\n";
     }
     
-    $email .= "--$boundary--\r\n";
-    $email .= ".\r\n";
+    $emailContents .= "--$boundary--\r\n";
+    $emailContents .= ".\r\n";
     
-    fputs($socket, $email);
+    fputs($socket, $emailContents);
     fgets($socket, 515);
     fputs($socket, "QUIT\r\n");
     fclose($socket);
