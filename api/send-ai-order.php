@@ -149,23 +149,58 @@ if ($productType === 'edge-engine-custom') {
 }
 
 try {
-    // 1. Send purely to Admin (No CC/BCC links)
-    sendEmail($smtp_host, $smtp_port, $smtp_user, $smtp_pass, $admin_email, $subjectTitle, $adminEmailBody, $pdfContent, 'SOHUB Admin');
-    
-    // 2. Send purely to Customer (If provided)
-    if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $msg = ($productType === 'edge-engine-custom') ? "Custom Request Received" : "Order Confirmation";
-        sendEmail($smtp_host, $smtp_port, $smtp_user, $smtp_pass, $email, "$msg - SOHUB AI Vision", $customerEmailBody, $pdfContent, $name);
+    $adminRecipients = parseEmailList($admin_email);
+    if (empty($adminRecipients)) {
+        throw new Exception('ADMIN_EMAIL is missing or invalid.');
+    }
+
+    $adminErrors = [];
+
+    // 1. Send to every admin recipient independently.
+    foreach ($adminRecipients as $recipient) {
+        try {
+            sendEmail($smtp_host, $smtp_port, $smtp_user, $smtp_pass, $recipient, $subjectTitle, $adminEmailBody, $pdfContent, 'SOHUB Admin');
+        } catch (Exception $e) {
+            $adminErrors[] = "Admin ($recipient): " . $e->getMessage();
+            error_log("AI Order admin email failed for $recipient: " . $e->getMessage());
+        }
     }
     
-    echo json_encode(['success' => true, 'message' => 'Your request has been sent successfully.']);
+    // 2. Send to customer (if provided) and keep a BCC to primary admin as fallback copy.
+    if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $msg = ($productType === 'edge-engine-custom') ? "Custom Request Received" : "Order Confirmation";
+        $primaryAdmin = $adminRecipients[0];
+        sendEmail($smtp_host, $smtp_port, $smtp_user, $smtp_pass, $email, "$msg - SOHUB AI Vision", $customerEmailBody, $pdfContent, $name, [$primaryAdmin], $email, $name);
+    }
+
+    if (!empty($adminErrors)) {
+        echo json_encode([
+            'success' => true,
+            'message' => 'Request submitted. Customer email sent, but some admin deliveries failed.',
+            'adminErrors' => $adminErrors
+        ]);
+    } else {
+        echo json_encode(['success' => true, 'message' => 'Your request has been sent successfully.']);
+    }
     
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode(['success' => false, 'error' => 'Email failed: ' . $e->getMessage()]);
 }
 
-function sendEmail($host, $port, $user, $pass, $to, $subject, $body, $pdfContent, $toName) {
+function parseEmailList($emails) {
+    $parts = preg_split('/[,\s;]+/', (string)$emails);
+    $valid = [];
+    foreach ($parts as $candidate) {
+        $candidate = trim($candidate);
+        if ($candidate !== '' && filter_var($candidate, FILTER_VALIDATE_EMAIL)) {
+            $valid[] = $candidate;
+        }
+    }
+    return array_values(array_unique($valid));
+}
+
+function sendEmail($host, $port, $user, $pass, $to, $subject, $body, $pdfContent, $toName, $bccList = [], $replyToEmail = '', $replyToName = '') {
     $mail = new PHPMailer(true);
     try {
         $mail->isSMTP();
@@ -178,6 +213,14 @@ function sendEmail($host, $port, $user, $pass, $to, $subject, $body, $pdfContent
 
         $mail->setFrom($user, 'SOHUB AI Vision');
         $mail->addAddress($to, $toName);
+
+        foreach (parseEmailList(implode(',', (array)$bccList)) as $bccEmail) {
+            $mail->addBCC($bccEmail);
+        }
+
+        if (!empty($replyToEmail) && filter_var($replyToEmail, FILTER_VALIDATE_EMAIL)) {
+            $mail->addReplyTo($replyToEmail, $replyToName ?: $replyToEmail);
+        }
         
         $mail->CharSet = 'UTF-8';
 
