@@ -116,11 +116,6 @@ const ProductEdgeEngine = () => {
       const data = await response.json();
 
       if (data.success) {
-        if (Array.isArray(data.adminErrors) && data.adminErrors.length > 0) {
-          console.warn("Admin email delivery issues:", data.adminErrors);
-          alert("Request submitted, but admin mail delivery failed. Please contact support.");
-        }
-
         setSubmitted(true);
         setTimeout(() => {
           setSubmitted(false);

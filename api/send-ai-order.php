@@ -125,14 +125,18 @@ if ($productType === 'edge-engine-custom') {
     $subjectTitle = "AI Edge Engine Order - $name";
     $adminEmailBody = "
     <html>
+    <head><style>body{font-family:Arial,sans-serif;line-height:1.6;color:#333;padding:20px}.header{background:#18B5FE;color:white;padding:20px;text-align:center;border-radius:8px}table{width:100%;margin:20px 0}td{padding:8px 0}.label{font-weight:600;color:#666;width:150px}</style></head>
     <body>
-    <h2 style='color:#18B5FE'>🧠 New Order: $machineType</h2>
+    <div class='header'><h2 style='margin:0'>🧠 New AI Edge Engine Order</h2></div>
     <p>A new purchase request has been submitted. Full details are in the attached PDF.</p>
-    <ul>
-    <li>Customer: $name</li>
-    <li>Phone: $phone</li>
-    <li>Location: $location</li>
-    </ul>
+    <table>
+    <tr><td class='label'>Customer Name:</td><td><strong>$name</strong></td></tr>
+    <tr><td class='label'>Phone:</td><td><strong>$phone</strong></td></tr>
+    <tr><td class='label'>Email:</td><td>" . ($email ?: 'Not provided') . "</td></tr>
+    <tr><td class='label'>Location:</td><td>$location</td></tr>
+    <tr><td class='label'>Total Amount:</td><td><strong style='color:#18B5FE;font-size:18px'>৳" . number_format($totalPrice) . "</strong></td></tr>
+    </table>
+    <p style='color:#666;font-size:12px;margin-top:30px'>Order received at: " . date('d M Y, h:i A') . "</p>
     </body>
     </html>";
 
@@ -148,67 +152,39 @@ if ($productType === 'edge-engine-custom') {
     </html>";
 }
 
+file_put_contents(__DIR__ . '/mail_log.txt', "\n--- NEW ORDER INITIATED AT " . date('Y-m-d H:i:s') . " ---\n", FILE_APPEND);
+
 try {
-    $adminRecipients = parseEmailList($admin_email);
-    if (empty($adminRecipients)) {
-        throw new Exception('ADMIN_EMAIL is missing or invalid.');
-    }
-
-    $adminErrors = [];
-
-    // 1. Send to every admin recipient independently.
-    foreach ($adminRecipients as $recipient) {
-        try {
-            sendEmail($smtp_host, $smtp_port, $smtp_user, $smtp_pass, $recipient, $subjectTitle, $adminEmailBody, $pdfContent, 'SOHUB Admin');
-            error_log("AI Order admin email sent to $recipient");
-        } catch (Exception $e) {
-            $adminErrors[] = "Admin ($recipient): " . $e->getMessage();
-            error_log("AI Order admin email failed for $recipient: " . $e->getMessage());
-        }
-    }
+    // 1. Send purely to Admin
+    sendEmail($smtp_host, $smtp_port, $smtp_user, $smtp_pass, $admin_email, $subjectTitle, $adminEmailBody, $pdfContent, 'SOHUB Admin', $email);
+    file_put_contents(__DIR__ . '/mail_log.txt', "ADMIN EMAIL SUCCESSFUL\n", FILE_APPEND);
     
-    // 2. Send to customer (if provided) and keep a BCC to primary admin as fallback copy.
+    // Safety delay to prevent Gmail duplicate suppression
+    sleep(2);
+    
+    // 2. Send purely to Customer (If provided)
     if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $msg = ($productType === 'edge-engine-custom') ? "Custom Request Received" : "Order Confirmation";
-        $primaryAdmin = $adminRecipients[0];
-        sendEmail($smtp_host, $smtp_port, $smtp_user, $smtp_pass, $email, "$msg - SOHUB AI Vision", $customerEmailBody, $pdfContent, $name, [$primaryAdmin], $email, $name);
-    }
-
-    if (!empty($adminErrors)) {
-        echo json_encode([
-            'success' => true,
-            'message' => 'Request submitted. Customer email sent, but some admin deliveries failed.',
-            'adminDelivery' => false,
-            'adminErrors' => $adminErrors
-        ]);
-    } else {
-        echo json_encode([
-            'success' => true,
-            'message' => 'Your request has been sent successfully.',
-            'adminDelivery' => true
-        ]);
+        sendEmail($smtp_host, $smtp_port, $smtp_user, $smtp_pass, $email, "$msg - SOHUB AI Vision", $customerEmailBody, $pdfContent, $name, $admin_email);
+        file_put_contents(__DIR__ . '/mail_log.txt', "CUSTOMER EMAIL SUCCESSFUL\n", FILE_APPEND);
     }
     
+    echo json_encode(['success' => true, 'message' => 'Your request has been sent successfully.']);
+    
 } catch (Exception $e) {
+    file_put_contents(__DIR__ . '/mail_log.txt', "EXCEPTION OCCURRED: " . $e->getMessage() . "\n", FILE_APPEND);
     http_response_code(500);
     echo json_encode(['success' => false, 'error' => 'Email failed: ' . $e->getMessage()]);
 }
 
-function parseEmailList($emails) {
-    $parts = preg_split('/[,\s;]+/', (string)$emails);
-    $valid = [];
-    foreach ($parts as $candidate) {
-        $candidate = trim($candidate);
-        if ($candidate !== '' && filter_var($candidate, FILTER_VALIDATE_EMAIL)) {
-            $valid[] = $candidate;
-        }
-    }
-    return array_values(array_unique($valid));
-}
-
-function sendEmail($host, $port, $user, $pass, $to, $subject, $body, $pdfContent, $toName, $bccList = [], $replyToEmail = '', $replyToName = '') {
+function sendEmail($host, $port, $user, $pass, $to, $subject, $body, $pdfContent, $toName, $replyToEmail = null) {
     $mail = new PHPMailer(true);
     try {
+        $mail->SMTPDebug = 2; // Output raw SMTP info
+        $mail->Debugoutput = function($str, $level) {
+            file_put_contents(__DIR__ . '/mail_log.txt', $str . "\n", FILE_APPEND | LOCK_EX);
+        };
+        
         $mail->isSMTP();
         $mail->Host       = $host;
         $mail->SMTPAuth   = true;
@@ -219,13 +195,8 @@ function sendEmail($host, $port, $user, $pass, $to, $subject, $body, $pdfContent
 
         $mail->setFrom($user, 'SOHUB AI Vision');
         $mail->addAddress($to, $toName);
-
-        foreach (parseEmailList(implode(',', (array)$bccList)) as $bccEmail) {
-            $mail->addBCC($bccEmail);
-        }
-
-        if (!empty($replyToEmail) && filter_var($replyToEmail, FILTER_VALIDATE_EMAIL)) {
-            $mail->addReplyTo($replyToEmail, $replyToName ?: $replyToEmail);
+        if ($replyToEmail && filter_var($replyToEmail, FILTER_VALIDATE_EMAIL)) {
+            $mail->addReplyTo($replyToEmail);
         }
         
         $mail->CharSet = 'UTF-8';
