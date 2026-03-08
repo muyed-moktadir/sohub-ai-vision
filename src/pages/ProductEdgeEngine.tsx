@@ -150,7 +150,7 @@ const ProductEdgeEngine = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-sohub-orange/[0.02] via-transparent to-background" />
         <div className="absolute top-20 right-[10%] w-[500px] h-[500px] rounded-full bg-sohub-orange/[0.03] blur-[100px] pointer-events-none" />
 
-        <div className="container mx-auto px-6 relative z-10">
+        <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 relative z-10">
           <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-10 group">
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Home
           </Link>
@@ -227,7 +227,7 @@ const ProductEdgeEngine = () => {
 
       {/* Stats Strip */}
       <section className="py-10 border-y border-border/60 bg-secondary/20">
-        <div className="container mx-auto px-6">
+        <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {highlights.map((h, i) => (
               <motion.div
@@ -248,7 +248,7 @@ const ProductEdgeEngine = () => {
 
       {/* How it connects - Visual diagram */}
       <section className="py-24 md:py-32">
-        <div className="container mx-auto px-6">
+        <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8">
           <ScrollReveal>
             <p className="text-center text-xs font-semibold tracking-[0.2em] uppercase text-sohub-orange mb-5">Architecture</p>
             <h2 className="text-section-mobile md:text-[3rem] text-center text-foreground mb-5 font-extrabold">How It Connects</h2>
@@ -357,7 +357,7 @@ const ProductEdgeEngine = () => {
 
       {/* Benefits */}
       <section className="py-24 md:py-32 bg-sohub-gray-50">
-        <div className="container mx-auto px-6">
+        <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8">
           <ScrollReveal>
             <p className="text-center text-xs font-semibold tracking-[0.2em] uppercase text-sohub-orange mb-5">Benefits</p>
             <h2 className="text-section-mobile md:text-[3rem] text-center text-foreground mb-5 font-extrabold">Why Edge Engine?</h2>
@@ -382,7 +382,7 @@ const ProductEdgeEngine = () => {
 
       {/* Specifications */}
       <section className="py-24 md:py-32">
-        <div className="container mx-auto px-6">
+        <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8">
           <ScrollReveal>
             <p className="text-center text-xs font-semibold tracking-[0.2em] uppercase text-sohub-orange mb-5">Specs</p>
             <h2 className="text-section-mobile md:text-[3rem] text-center text-foreground mb-20 font-extrabold">Technical Specifications</h2>
@@ -408,7 +408,7 @@ const ProductEdgeEngine = () => {
       {/* Videos */}
       {videos.length > 0 && (
         <section className="py-24 md:py-32 bg-sohub-gray-50">
-          <div className="container mx-auto px-6">
+          <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8">
             <ScrollReveal>
               <p className="text-center text-xs font-semibold tracking-[0.2em] uppercase text-sohub-orange mb-5">Demo</p>
               <h2 className="text-section-mobile md:text-[3rem] text-center text-foreground mb-16 font-extrabold">See It In Action</h2>
@@ -434,7 +434,7 @@ const ProductEdgeEngine = () => {
 
       {/* Checkout / Pricing */}
       <section className="py-24 md:py-32" id="order-section">
-        <div className="container mx-auto px-6 max-w-6xl">
+        <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 lg:px-24">
           <ScrollReveal>
             <div className="text-center mb-14">
               <p className="text-center text-xs font-semibold tracking-[0.2em] uppercase text-sohub-orange mb-4">Order</p>
@@ -664,7 +664,7 @@ const ProductEdgeEngine = () => {
 
       {/* FAQ */}
       <section className="py-24 md:py-32 bg-sohub-gray-50">
-        <div className="container mx-auto px-6">
+        <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8">
           <ScrollReveal>
             <h2 className="text-section-mobile md:text-[3rem] text-center text-foreground mb-16 font-extrabold">Frequently Asked Questions</h2>
           </ScrollReveal>

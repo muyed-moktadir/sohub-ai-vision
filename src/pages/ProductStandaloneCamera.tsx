@@ -87,12 +87,12 @@ const ProductStandaloneCamera = () => {
       <section className="pt-28 pb-16 md:pt-40 md:pb-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-sohub-orange/[0.02] via-transparent to-background" />
         <div className="absolute top-20 right-[10%] w-[500px] h-[500px] rounded-full bg-sohub-orange/[0.03] blur-[100px] pointer-events-none" />
-        
-        <div className="container mx-auto px-6 relative z-10">
+
+        <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 relative z-10">
           <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-10 group">
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Home
           </Link>
-          
+
           <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -110,12 +110,12 @@ const ProductStandaloneCamera = () => {
               <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-lg">
                 A standalone smart camera with AI built right in. No external hardware, no complex setup — just intelligent surveillance out of the box.
               </p>
-              
+
               <div className="flex items-baseline gap-2 mb-6">
                 <span className="text-sm text-muted-foreground">Starting from</span>
                 <span className="text-4xl md:text-5xl font-extrabold text-foreground">৳8,000</span>
               </div>
-              
+
               {/* Trust points */}
               <div className="flex flex-wrap gap-3 mb-10">
                 {trustPoints.map((t, i) => (
@@ -136,7 +136,7 @@ const ProductStandaloneCamera = () => {
                 Order Now
               </Button>
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -163,7 +163,7 @@ const ProductStandaloneCamera = () => {
 
       {/* Stats Strip */}
       <section className="py-10 border-y border-border/60 bg-secondary/20">
-        <div className="container mx-auto px-6">
+        <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {highlights.map((h, i) => (
               <motion.div
@@ -184,13 +184,13 @@ const ProductStandaloneCamera = () => {
 
       {/* Built-in AI Models */}
       <section className="py-24 md:py-32">
-        <div className="container mx-auto px-6">
+        <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8">
           <ScrollReveal>
             <p className="text-center text-xs font-semibold tracking-[0.2em] uppercase text-sohub-orange mb-5">Pre-Loaded</p>
             <h2 className="text-section-mobile md:text-[3rem] text-center text-foreground mb-5 font-extrabold">Built-in AI Models</h2>
             <p className="text-center text-muted-foreground text-body-lg mb-16 max-w-lg mx-auto">Ready to detect from the moment you power on.</p>
           </ScrollReveal>
-          
+
           <div className="grid sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
             {aiModels.map((model, i) => (
               <ScrollReveal key={i} delay={i * 0.1}>
@@ -212,7 +212,7 @@ const ProductStandaloneCamera = () => {
 
       {/* Benefits */}
       <section className="py-24 md:py-32 bg-sohub-gray-50">
-        <div className="container mx-auto px-6">
+        <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8">
           <ScrollReveal>
             <p className="text-center text-xs font-semibold tracking-[0.2em] uppercase text-sohub-orange mb-5">Benefits</p>
             <h2 className="text-section-mobile md:text-[3rem] text-center text-foreground mb-5 font-extrabold">Why Standalone Camera?</h2>
@@ -237,7 +237,7 @@ const ProductStandaloneCamera = () => {
 
       {/* Specifications */}
       <section className="py-24 md:py-32">
-        <div className="container mx-auto px-6">
+        <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8">
           <ScrollReveal>
             <p className="text-center text-xs font-semibold tracking-[0.2em] uppercase text-sohub-orange mb-5">Specs</p>
             <h2 className="text-section-mobile md:text-[3rem] text-center text-foreground mb-20 font-extrabold">Technical Specifications</h2>
@@ -263,7 +263,7 @@ const ProductStandaloneCamera = () => {
       {/* Videos */}
       {videos.length > 0 && (
         <section className="py-24 md:py-32 bg-sohub-gray-50">
-          <div className="container mx-auto px-6">
+          <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8">
             <ScrollReveal>
               <p className="text-center text-xs font-semibold tracking-[0.2em] uppercase text-sohub-orange mb-5">Demo</p>
               <h2 className="text-section-mobile md:text-[3rem] text-center text-foreground mb-16 font-extrabold">See It In Action</h2>
@@ -289,7 +289,7 @@ const ProductStandaloneCamera = () => {
 
       {/* Checkout */}
       <section className="py-24 md:py-32">
-        <div className="container mx-auto px-6">
+        <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8">
           <ScrollReveal>
             <p className="text-center text-xs font-semibold tracking-[0.2em] uppercase text-sohub-orange mb-5">Order</p>
             <h2 className="text-section-mobile md:text-[3rem] text-center text-foreground mb-5 font-extrabold">Configure Your Order</h2>
@@ -318,17 +318,15 @@ const ProductStandaloneCamera = () => {
                   key={i}
                   whileHover={{ y: -2 }}
                   onClick={() => toggleAddOn(i)}
-                  className={`p-5 rounded-xl border cursor-pointer transition-all duration-200 ${
-                    selectedAddOns.includes(i)
+                  className={`p-5 rounded-xl border cursor-pointer transition-all duration-200 ${selectedAddOns.includes(i)
                       ? "border-sohub-orange/40 bg-sohub-orange/[0.04] shadow-sm"
                       : "border-border bg-background hover:border-sohub-orange/20"
-                  }`}
+                    }`}
                 >
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-3">
-                      <div className={`w-6 h-6 rounded-md border-2 flex items-center justify-center transition-colors ${
-                        selectedAddOns.includes(i) ? "bg-sohub-orange border-sohub-orange" : "border-border"
-                      }`}>
+                      <div className={`w-6 h-6 rounded-md border-2 flex items-center justify-center transition-colors ${selectedAddOns.includes(i) ? "bg-sohub-orange border-sohub-orange" : "border-border"
+                        }`}>
                         {selectedAddOns.includes(i) ? <Check className="w-4 h-4 text-primary-foreground" /> : <Plus className="w-3 h-3 text-muted-foreground" />}
                       </div>
                       <div>
@@ -354,7 +352,7 @@ const ProductStandaloneCamera = () => {
 
       {/* Upsell Banner */}
       <section className="py-16 bg-gradient-to-r from-foreground/[0.02] via-sohub-orange/[0.04] to-foreground/[0.02] border-y border-border/60">
-        <div className="container mx-auto px-6 text-center">
+        <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 text-center">
           <p className="text-sm text-muted-foreground mb-2">Need more cameras or centralized processing?</p>
           <h3 className="text-xl font-bold text-foreground mb-4">
             Check out the <span className="text-sohub-orange">Edge Engine</span> for multi-camera setups.
@@ -369,7 +367,7 @@ const ProductStandaloneCamera = () => {
 
       {/* FAQ */}
       <section className="py-24 md:py-32 bg-sohub-gray-50">
-        <div className="container mx-auto px-6">
+        <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8">
           <ScrollReveal>
             <h2 className="text-section-mobile md:text-[3rem] text-center text-foreground mb-16 font-extrabold">Frequently Asked Questions</h2>
           </ScrollReveal>
