@@ -148,7 +148,7 @@ const Navbar = () => {
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="bg-background/70 backdrop-blur-xl border-b border-border/40"
       >
-        <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 flex items-center justify-between h-16">
+        <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8 flex items-center justify-between h-14">
           <a href="/" className="flex items-center gap-1.5">
             <span className="text-xl font-extrabold tracking-tight text-foreground">SOHUB</span>
             <span className="text-xl font-light text-sohub-orange">AI Vision</span>

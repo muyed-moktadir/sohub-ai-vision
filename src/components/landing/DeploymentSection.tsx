@@ -1,6 +1,7 @@
 import ScrollReveal from "./ScrollReveal";
 import { motion } from "framer-motion";
 import { Server, Camera, Cpu, MonitorSpeaker, Layers, Zap, Box, Settings } from "lucide-react";
+import aiEngineImg from "@/assets/ai_engine.png";
 
 const DeploymentSection = () => (
   <section id="deployment" className="py-28 md:py-36 relative">
@@ -28,7 +29,7 @@ const DeploymentSection = () => (
           >
             {/* Full Width Visual Section */}
             <div className="w-full aspect-[4/3] relative overflow-hidden border-b border-border/40 bg-secondary/10">
-              <img src="/src/assets/ai_engine.png" alt="SOHUB AI Vision Edge Engine" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <img src={aiEngineImg} alt="SOHUB AI Vision Edge Engine" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
             </div>
 
             <div className="relative p-8 md:p-10 flex-1 flex flex-col">

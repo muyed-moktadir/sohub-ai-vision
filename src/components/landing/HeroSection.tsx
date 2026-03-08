@@ -14,7 +14,7 @@ const HeroSection = () => (
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sohub-orange/8 border border-sohub-orange/15 mb-5"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sohub-orange/8 border border-sohub-orange/15 mt-12 mb-12"
         >
           <span className="w-2 h-2 rounded-full bg-sohub-orange animate-pulse" />
           <span className="text-xs font-medium tracking-wide text-sohub-orange uppercase">SOHUB AI Vision · Made for Bangladesh</span>
@@ -38,34 +38,34 @@ const HeroSection = () => (
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-           className="max-w-3xl mx-auto mb-2"
-         >
-           <img src={heroImage} alt="SOHUB AI Vision system with cameras and edge engine detecting falls, intrusions and fire" className="w-full h-auto rounded-2xl -my-4 md:-my-6" />
-         </motion.div>
- 
-         <motion.p
-           initial={{ opacity: 0, y: 20 }}
-           animate={{ opacity: 1, y: 0 }}
-           transition={{ duration: 0.7, delay: 0.3 }}
-           className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto mb-5 leading-relaxed md:whitespace-nowrap"
-         >
-           Real-time AI for your existing cameras — fully offline, no cloud, no subscriptions.
-         </motion.p>
- 
-         {/* Starting Price + CTA */}
-         <motion.div
-           initial={{ opacity: 0, y: 15 }}
-           animate={{ opacity: 1, y: 0 }}
-           transition={{ duration: 0.6, delay: 0.35 }}
-           className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mb-16"
-         >
-           <div className="flex items-center gap-1">
-             <span className="text-[10px] sm:text-xs text-muted-foreground">Starting from</span>
-             <span className="text-lg sm:text-xl font-extrabold text-foreground">৳8,000</span>
-             <span className="text-[9px] sm:text-[10px] text-muted-foreground">/unit</span>
-           </div>
-           <a href="#deployment">
-             <Button variant="hero" size="default" className="rounded-xl text-xs sm:text-sm px-6 py-4 sm:px-8 sm:py-5 shadow-[0_8px_30px_-6px_hsl(199,100%,50%,0.4)]">
+          className="max-w-3xl mx-auto mb-2"
+        >
+          <img src={heroImage} alt="SOHUB AI Vision system with cameras and edge engine detecting falls, intrusions and fire" className="w-full h-auto rounded-2xl -my-4 md:-my-6" />
+        </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto mb-5 leading-relaxed md:whitespace-nowrap"
+        >
+          Real-time AI for your existing cameras — fully offline, no cloud, no subscriptions.
+        </motion.p>
+
+        {/* Starting Price + CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.35 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mb-16"
+        >
+          <div className="flex items-center gap-1">
+            <span className="text-[10px] sm:text-xs text-muted-foreground">Starting from</span>
+            <span className="text-lg sm:text-xl font-extrabold text-foreground">৳8,000</span>
+            <span className="text-[9px] sm:text-[10px] text-muted-foreground">/unit</span>
+          </div>
+          <a href="#deployment">
+            <Button variant="hero" size="default" className="rounded-xl text-xs sm:text-sm px-6 py-4 sm:px-8 sm:py-5 shadow-[0_8px_30px_-6px_hsl(199,100%,50%,0.4)]">
               Deployment
             </Button>
           </a>
@@ -80,7 +80,7 @@ const HeroSection = () => (
         >
           {/* Glow behind diagram */}
           <div className="absolute inset-0 bg-gradient-to-b from-sohub-orange/5 to-transparent rounded-3xl blur-2xl" />
-          
+
           <div className="relative bg-background/60 backdrop-blur-sm border border-border/60 rounded-2xl p-8 md:p-10">
             {/* Flow label */}
             <div className="flex items-center justify-center gap-3 mb-8">
@@ -90,9 +90,8 @@ const HeroSection = () => (
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: 0.8 + i * 0.15 }}
-                    className={`text-xs font-semibold tracking-wide uppercase ${
-                      i === 2 ? "text-sohub-orange" : "text-muted-foreground"
-                    }`}
+                    className={`text-xs font-semibold tracking-wide uppercase ${i === 2 ? "text-sohub-orange" : "text-muted-foreground"
+                      }`}
                   >
                     {label}
                   </motion.span>
@@ -136,7 +135,7 @@ const HeroSection = () => (
 const SurveillanceBackground = () => (
   <div className="absolute inset-0 overflow-hidden">
     <div className="absolute inset-0 bg-gradient-to-b from-sohub-orange/[0.02] via-transparent to-background" />
-    
+
     <svg className="absolute inset-0 w-full h-full opacity-[0.25]" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <pattern id="hero-grid" width="60" height="60" patternUnits="userSpaceOnUse">
@@ -155,11 +154,10 @@ const SurveillanceBackground = () => (
 const DiagramNode = ({ icon, label, sublabel, highlight = false }: { icon: React.ReactNode; label: string; sublabel: string; highlight?: boolean }) => (
   <motion.div
     whileHover={{ scale: 1.04, y: -2 }}
-    className={`flex flex-col items-center gap-1.5 px-6 py-5 rounded-xl border transition-all duration-200 ${
-      highlight
-        ? "border-sohub-orange/30 bg-gradient-to-b from-sohub-orange/8 to-sohub-orange/3 shadow-[0_4px_20px_-4px_hsl(199,100%,50%,0.15)]"
-        : "border-border bg-secondary/40"
-    }`}
+    className={`flex flex-col items-center gap-1.5 px-6 py-5 rounded-xl border transition-all duration-200 ${highlight
+      ? "border-sohub-orange/30 bg-gradient-to-b from-sohub-orange/8 to-sohub-orange/3 shadow-[0_4px_20px_-4px_hsl(199,100%,50%,0.15)]"
+      : "border-border bg-secondary/40"
+      }`}
   >
     <div className={`p-2 rounded-lg ${highlight ? "bg-sohub-orange/10 text-sohub-orange" : "bg-secondary text-muted-foreground"}`}>
       {icon}
