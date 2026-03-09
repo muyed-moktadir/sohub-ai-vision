@@ -610,6 +610,7 @@ const ProductStandaloneCamera = () => {
       <section className="py-24 md:py-32 bg-sohub-gray-50">
         <div className="mx-auto max-w-[1300px] px-4 sm:px-6 md:px-8">
           <ScrollReveal>
+            <p className="text-center text-xs font-semibold tracking-[0.2em] uppercase text-sohub-orange mb-4">FAQ</p>
             <h2 className="text-section-mobile md:text-[3rem] text-center text-foreground mb-16 font-extrabold">Frequently Asked Questions</h2>
           </ScrollReveal>
           <div className="max-w-2xl mx-auto space-y-3">

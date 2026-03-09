@@ -23,9 +23,9 @@ const navLinks = [
 ];
 
 const socialLinks = [
-  { icon: <Facebook className="w-4 h-4" />, href: "https://facebook.com/sohub", label: "Facebook" },
-  { icon: <Linkedin className="w-4 h-4" />, href: "https://linkedin.com/company/sohub", label: "LinkedIn" },
-  { icon: <Youtube className="w-4 h-4" />, href: "https://youtube.com/@sohub", label: "YouTube" },
+  { icon: <Facebook className="w-4 h-4" />, href: "https://www.facebook.com/solutionhubtechnologies/", label: "Facebook" },
+  { icon: <Linkedin className="w-4 h-4" />, href: "https://www.linkedin.com/company/solution-hub-technologie-sohub/", label: "LinkedIn" },
+  { icon: <Youtube className="w-4 h-4" />, href: "https://www.youtube.com/@solutionhubtechnologysohub", label: "YouTube" },
 ];
 
 const Navbar = () => {
