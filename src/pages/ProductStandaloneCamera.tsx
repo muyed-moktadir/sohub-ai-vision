@@ -7,7 +7,7 @@ import ScrollReveal from "@/components/landing/ScrollReveal";
 import SEOHead from "@/components/SEOHead";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
-import aiCameraImg from "@/assets/ai-vision-4p.png";
+import aiCameraImg from "@/assets/ai-vision-4p-2.png";
 
 const specs = [
   { label: "Image Sensor", value: "1/2.7\" CMOS" },
@@ -409,7 +409,11 @@ const ProductStandaloneCamera = () => {
                                 {selectedAlgoCount === count && <div className="w-2 h-2 rounded-full bg-white" />}
                               </div>
                             </div>
-                            <h4 className="font-bold text-foreground text-lg mb-1">{count} AI Algorithm{count > 1 ? 's' : ''}</h4>
+                            <div className="mb-1">
+                              <p className="text-[10px] font-bold text-sohub-orange/60 uppercase tracking-wider leading-none mb-0.5">SOHUB Vision</p>
+                              <p className="text-xs font-bold text-foreground/40 uppercase tracking-wide leading-none mb-2">AI Camera</p>
+                              <h4 className="font-bold text-foreground text-lg leading-tight">{count} AI Algorithm{count > 1 ? 's' : ''}</h4>
+                            </div>
                             <p className="text-xs text-muted-foreground mb-4">
                               {count === 1 ? 'Essential detections' : 'Full suite of 4 detections'}
                             </p>
@@ -460,7 +464,7 @@ const ProductStandaloneCamera = () => {
                       <div className="space-y-3 pb-6 border-b border-border/60">
                         <div className="flex justify-between items-start">
                           <div>
-                            <p className="font-medium text-foreground">Vision AI Camera</p>
+                            <p className="font-medium text-foreground">SOHUB Vision AI Camera</p>
                             <p className="text-sm text-muted-foreground">{selectedAlgoCount} AI Algorithm{selectedAlgoCount > 1 ? 's' : ''}</p>
                           </div>
                           <span className="font-semibold text-foreground">{formatPrice(basePrice)}</span>
@@ -509,7 +513,7 @@ const ProductStandaloneCamera = () => {
                   <h3 className="font-bold text-lg mb-4 flex items-center gap-2 text-foreground"><ShoppingBag className="w-5 h-5 text-sohub-orange" /> Order Summary</h3>
                   <div className="text-sm space-y-2 text-muted-foreground">
                     <p className="font-medium text-foreground flex justify-between">
-                      <span>Vision AI Camera ({selectedAlgoCount} Algo)</span>
+                      <span>SOHUB Vision AI Camera ({selectedAlgoCount} Algo)</span>
                       <span>{formatPrice(basePrice)}</span>
                     </p>
                     {selectedAddOns.map(id => (

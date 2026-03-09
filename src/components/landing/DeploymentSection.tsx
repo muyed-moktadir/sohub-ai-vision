@@ -2,7 +2,7 @@ import ScrollReveal from "./ScrollReveal";
 import { motion } from "framer-motion";
 import { Server, Camera, Cpu, MonitorSpeaker, Layers, Zap, Box, Settings } from "lucide-react";
 import aiEngineImg from "@/assets/ai_engine.png";
-import aiCameraImg from "@/assets/ai-vision-4p.png";
+import aiCameraImg from "@/assets/ai-vision-4p-2.png";
 
 const DeploymentSection = () => (
   <section id="deployment" className="py-28 md:py-36 relative">
@@ -85,16 +85,17 @@ const DeploymentSection = () => (
             className="group relative flex flex-col h-full rounded-3xl border border-border/80 bg-background hover:border-sohub-orange/25 shadow-[0_1px_3px_0_hsl(0,0%,0%,0.04)] hover:shadow-[0_20px_50px_-12px_hsl(0,0%,0%,0.08)] transition-all duration-300"
           >
             {/* Full Width Visual Section */}
-            <div className="w-full aspect-[4/3] relative border-b border-border/40 bg-secondary/10 p-2">
-              <img src={aiCameraImg} alt="SOHUB Vision AI Camera" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 rounded-t-[22px]" />
-              <motion.div
-                animate={{ y: [0, -4, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-2 right-8 z-20 px-4 py-1.5 rounded-full bg-[#0DC7FF] text-white text-[10px] font-bold tracking-widest uppercase shadow-[0_8px_20px_-4px_rgba(13,199,255,0.4)] border border-white/20"
-              >
-                Plug & Play
-              </motion.div>
+            <div className="w-full aspect-[4/3] relative border-b border-border/40 bg-secondary/10 p-2 rounded-t-[23px] overflow-hidden">
+              <img src={aiCameraImg} alt="SOHUB Vision AI Camera" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 rounded-t-[21px]" />
             </div>
+
+            <motion.div
+              animate={{ y: [0, -4, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-2 right-8 z-20 px-4 py-1.5 rounded-full bg-[#0DC7FF] text-white text-[10px] font-bold tracking-widest uppercase shadow-[0_8px_20px_-4px_rgba(13,199,255,0.4)] border border-white/20"
+            >
+              Plug & Play
+            </motion.div>
 
             <div className="relative p-8 md:p-10 flex-1 flex flex-col">
               {/* Subtle corner gradient */}

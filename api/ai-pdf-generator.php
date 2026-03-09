@@ -157,9 +157,10 @@ function generateAIOrderPDF($name, $company, $phone, $email, $location, $notes, 
 
 function getAddonPrice($name) {
     $prices = [
-        'Professional Installation' => 5000,
-        'On-Site Training' => 3000,
-        'Extended Warranty' => 8000,
+        'Professional Installation' => 2000,
+        'On-Site Training' => 1500,
+        'Extended Warranty' => 2000,
+        'Mounting Kit (Pole/Wall)' => 500,
         'Priority Support' => 5000
     ];
     return $prices[$name] ?? 0;
