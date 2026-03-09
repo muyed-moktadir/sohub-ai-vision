@@ -162,6 +162,8 @@ const Navbar = () => {
                   {initiatives.map((initiative) => {
                     const isCurrentSite =
                       initiative.id === "vision" ||
+                      initiative.id === "ai" ||
+                      initiative.name.toLowerCase() === "sohub ai" ||
                       initiative.name.toLowerCase().includes("vision");
                     return initiative.href ? (
                       <a
