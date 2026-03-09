@@ -52,9 +52,9 @@ const Footer = () => (
         <div>
           <h4 className="text-xs font-semibold tracking-[0.15em] uppercase text-foreground mb-4">Company</h4>
           <ul className="space-y-2.5 text-sm text-muted-foreground">
-            <li><a href="/#contact" className="hover:text-foreground transition-colors">About SOHUB</a></li>
+            <li><a href="/about" className="hover:text-foreground transition-colors">About Us</a></li>
             <li><a href="/#deployment" className="hover:text-foreground transition-colors">Deployment</a></li>
-            <li><a href="mailto:info@sohub.com.bd" className="hover:text-foreground transition-colors">Contact</a></li>
+            <li><a href="/contact" className="hover:text-foreground transition-colors">Contact</a></li>
             <li><a href="/#faq" className="hover:text-foreground transition-colors">FAQ</a></li>
           </ul>
         </div>

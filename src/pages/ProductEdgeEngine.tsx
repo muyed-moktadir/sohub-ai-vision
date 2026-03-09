@@ -86,10 +86,10 @@ const ProductEdgeEngine = () => {
   const addOnTotal = selectedAddOns.reduce((sum, idx) => sum + addOns[idx].price, 0);
   const totalPrice = basePrice + addOnTotal;
 
-  const handleCheckoutStep = () => {
+  const handleCheckoutStep = (targetId: string = 'order-section') => {
     setStep("checkout");
     setTimeout(() => {
-      document.getElementById('order-section')?.scrollIntoView({ behavior: 'smooth' });
+      document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
     }, 50);
   };
 
@@ -477,7 +477,7 @@ const ProductEdgeEngine = () => {
                             whileHover={{ y: -2 }}
                             onClick={() => {
                               setSelectedTier(i);
-                              if (i === 2) handleCheckoutStep();
+                              if (i === 2) handleCheckoutStep('discuss-requirements');
                             }}
                             className={`p-5 rounded-2xl border-2 cursor-pointer transition-all duration-200 text-center ${selectedTier === i
                               ? "border-sohub-orange/40 bg-gradient-to-b from-sohub-orange/[0.06] to-transparent shadow-sm"
@@ -567,7 +567,7 @@ const ProductEdgeEngine = () => {
                         )}
                       </div>
 
-                      <Button onClick={handleCheckoutStep} variant="hero" size="lg" className="w-full rounded-xl py-6 text-base group shadow-[0_8px_30px_-6px_hsl(199,100%,50%,0.4)]">
+                      <Button onClick={() => handleCheckoutStep(selectedTier === 2 ? 'discuss-requirements' : 'order-section')} variant="hero" size="lg" className="w-full rounded-xl py-6 text-base group shadow-[0_8px_30px_-6px_hsl(199,100%,50%,0.4)]">
                         {selectedTier === 2 ? "Discuss Requirements" : "Continue to Order"}
                         <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
                       </Button>
@@ -608,7 +608,7 @@ const ProductEdgeEngine = () => {
                     </div>
                   </div>
                 ) : (
-                  <div className="mb-8 text-center px-4">
+                  <div className="mb-8 text-center px-4" id="discuss-requirements">
                     <h3 className="font-bold text-2xl text-foreground mb-3">Discuss Requirements</h3>
                     <p className="text-muted-foreground text-sm max-w-lg mx-auto leading-relaxed">Please provide your details below. Our technical team will reach out to discuss your custom channel limits and deployment scope.</p>
                   </div>
